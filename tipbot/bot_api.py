@@ -515,11 +515,10 @@ class Database:
         """
         Returns the total balance of all user's
         """
-
-        query = self.db.execute("SELECT * FROM users").fetchall()
         total = 0
-        for entry in query:
-            total = total + entry[1]
+        temp = self.db.execute("SELECT SUM(balance) as total FROM users").fetchone()[0]
+        if temp:
+            return temp
         return total
 
     def get_comments_replied_to(self):
